@@ -1,9 +1,9 @@
 package com.chenson2910.mycrudboot.Controllers;
 
 
-import com.chenson2910.mycrudboot.user.User;
-import com.chenson2910.mycrudboot.user.UserNotFoundException;
-import com.chenson2910.mycrudboot.user.UserService;
+import com.chenson2910.mycrudboot.Model.User;
+import com.chenson2910.mycrudboot.Service.UserNotFoundException;
+import com.chenson2910.mycrudboot.Service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -22,7 +22,7 @@ public class UserController {
 
     @GetMapping("/users")
     public String showUserList(Model model) {
-        List<com.chenson2910.mycrudboot.user.User> userList = userService.listAll();
+        List<com.chenson2910.mycrudboot.Model.User> userList = userService.listAll();
         model.addAttribute("listUsers", userList);
         return "users";
     }

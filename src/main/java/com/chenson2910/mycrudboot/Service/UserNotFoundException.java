@@ -1,4 +1,4 @@
-package com.chenson2910.mycrudboot.user;
+package com.chenson2910.mycrudboot.Service;
 
 public class UserNotFoundException extends Throwable {
     public UserNotFoundException(String message) {

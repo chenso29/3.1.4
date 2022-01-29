@@ -1,5 +1,7 @@
-package com.chenson2910.mycrudboot.user;
+package com.chenson2910.mycrudboot.Service;
 
+import com.chenson2910.mycrudboot.Model.User;
+import com.chenson2910.mycrudboot.Repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.List;

@@ -1,4 +1,4 @@
-package com.chenson2910.mycrudboot.user;
+package com.chenson2910.mycrudboot.Model;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

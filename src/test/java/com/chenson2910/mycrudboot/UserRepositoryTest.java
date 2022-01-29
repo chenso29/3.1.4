@@ -1,9 +1,9 @@
 package com.chenson2910.mycrudboot;
 
-import com.chenson2910.mycrudboot.user.User;
+import com.chenson2910.mycrudboot.Model.User;
 
 
-import com.chenson2910.mycrudboot.user.UserRepository;
+import com.chenson2910.mycrudboot.Repository.UserRepository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
