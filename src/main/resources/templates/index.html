@@ -8,7 +8,17 @@
 <body>
 <div class="container-fluid text-center">
 <h1>Welcome to My Application!!!</h1>
-<a class="h2" th:href="@{/users}">Manage Users</a>
+<a class="h2" th:href="@{/admin/users}">Manage Users(only for ADMIN)</a>
+    <br><br>
+    <a class="h2" th:href="@{/user/lk}">User Information</a>
 </div>
+<br>
+<form th:if="${#request.userPrincipal == null}" th:action="@{/login}">
+    <button type="submit" class="btn btn-primary m-2">Login</button>
+</form>
+<br>
+<form th:if="${#request.userPrincipal != null}" th:action="@{/logout}">
+    <button type="submit" class="btn btn-primary m-2">Logout</button>
+</form>
 </body>
 </html>

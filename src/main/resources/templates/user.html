@@ -38,25 +38,8 @@
                 </div>
             </div>
         </div>
-        <label>
-            <input type="checkbox"
-                   name="roleAdmin"
-                   th:value="ROLE_ADMIN"
-                   th:text="Администратор">
-        </label>
-        <div class="text-center">
-            <button type="submit" class="btn btn-primary m-2">Save</button>
-            <button type="button" class="btn btn-secondary m-2" onclick="cancelForm()">Cancel</button>
-        </div>
     </form>
-
 </div>
-<script type="text/javascript">
-    function cancelForm() {
-        window.location = "[[@{/admin/users}]]";
-    }
-</script>
-
 <form th:if="${#request.userPrincipal != null}" th:action="@{/logout}">
     <button type="submit" class="btn btn-primary m-2">Logout</button>
 </form>

@@ -1,4 +1,4 @@
-package com.chenson2910.mycrudboot.Controllers;
+package com.chenson2910.mycrudboot.controllers;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -8,7 +8,7 @@ public class MainController {
 
 
     @GetMapping("")
-    public String showHomePage(){
+    public String showHomePage() {
         return "index";
     }
 }
