@@ -48,13 +48,7 @@ public class AdminController {
 
     @PostMapping("/users/")
     public String saveUser(@ModelAttribute("user") User user, @RequestParam(required = false) String roleAdmin, RedirectAttributes redirectAttributes) {
-        Set<Role> roles = new HashSet<>();
-        roles.add(roleService.getRoleByName("ROLE_USER"));
-        if (roleAdmin != null && roleAdmin.equals("ROLE_ADMIN")) {
-            roles.add(roleService.getRoleByName("ROLE_ADMIN"));
-        }
-        user.setRoles(roles);
-        userService.save(user);
+            userService.save(user);
         redirectAttributes.addFlashAttribute("message", "User successfully created");
         return "redirect:/admin/users";
     }
