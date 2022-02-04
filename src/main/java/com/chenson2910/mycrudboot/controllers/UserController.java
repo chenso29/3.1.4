@@ -1,6 +1,7 @@
 package com.chenson2910.mycrudboot.controllers;
 
 
+import com.chenson2910.mycrudboot.service.UserDetailServiceImpl;
 import com.chenson2910.mycrudboot.service.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -13,16 +14,16 @@ import java.security.Principal;
 @Controller
 @RequestMapping("/user")
 public class UserController {
-    private final UserServiceImpl userServiceImpl;
+    private final UserDetailServiceImpl userDetailService;
 
     @Autowired
-    public UserController(UserServiceImpl userServiceImpl) {
-        this.userServiceImpl = userServiceImpl;
+    public UserController(UserDetailServiceImpl userDetailService) {
+        this.userDetailService = userDetailService;
     }
 
-    @GetMapping(value = "/lk")
-    public String getUserPage2(ModelMap modelMap, Principal principal) {
-        modelMap.addAttribute("user", userServiceImpl.loadUserByUsername(principal.getName()));
+    @GetMapping(value = "/")
+    public String getUserPage(ModelMap modelMap, Principal principal) {
+        modelMap.addAttribute("user", userDetailService.loadUserByUsername(principal.getName()));
         return "user";
     }
 }

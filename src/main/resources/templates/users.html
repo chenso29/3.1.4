@@ -36,14 +36,14 @@
                     <td>[[${user.age}]]</td>
                     <td>[[${user.roles}]]</td>
                     <td>
-                        <form action="#" th:action="@{'/admin/users/delete/' + ${user.id}}" th:method="delete">
+                        <form action="#" th:action="@{'/admin/users/' + ${user.id}}" th:method="delete">
                             <input type="hidden" name="_method" value="delete"/>
                             <button type="submit" class="btn btn-primary m-2" id=" deleteButton
                             ">Delete</button>
                         </form>
                     </td>
                     <td>
-                        <form action="#" th:action="@{'/admin/users/edit/' + ${user.id}}" th:method="put">
+                        <form action="#" th:action="@{'/admin/users/' + ${user.id}}" th:method="put">
                             <input type="hidden" name="_method" value="edit"/>
                             <button type="submit" class="btn btn-primary m-2" id=" editButton
                             ">Edit</button>

@@ -14,5 +14,4 @@ public interface UserService {
 
     void delete(Integer id) throws UserNotFoundException;
 
-    Role getRoleByName(String name);
 }
