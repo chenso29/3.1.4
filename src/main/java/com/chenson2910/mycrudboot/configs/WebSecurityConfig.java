@@ -25,33 +25,31 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
 
     @Override
-    protected void configure(HttpSecurity httpSecurity) throws Exception {
-        httpSecurity
-                .csrf().disable()
-                .formLogin()
-                .loginPage("/login")
-                .successHandler(successUserHandler)
-                .loginProcessingUrl("/login")
-                .permitAll()
-                .and()
+    protected void configure(HttpSecurity http) throws Exception {
+        http.csrf().disable() //
                 .authorizeRequests()
-                .antMatchers("/").permitAll()
-                .antMatchers("/login").anonymous()
+                .antMatchers("/", "index", "/css/**", "/js/**", "/webjars/**", "/actuator/**").permitAll()
                 .antMatchers("/admin/**").hasRole("ADMIN")
-                .antMatchers("/user/**").hasAnyRole("USER", "ADMIN")
-                //Все остальные страницы требуют аутентификации
-                .anyRequest().authenticated()
-                .and()
-                .logout()
-                .permitAll()
-                .logoutSuccessUrl("/");
-
-
+                .antMatchers("/user/**").hasAnyRole("ADMIN", "USER")
+                .anyRequest().authenticated();
+        http.formLogin()
+                .loginPage("/") // указываем страницу с формой логина
+                .permitAll()  // даем доступ к форме логина всем
+                .successHandler(successUserHandler) //указываем логику обработки при удачном логине
+                .usernameParameter("email") // Указываем параметры логина и пароля с формы логина
+                .passwordParameter("password");
+        http.logout()
+                .logoutUrl("/logout")
+                .clearAuthentication(true)
+                .invalidateHttpSession(true)
+                .deleteCookies("JSESSIONID")
+                .logoutSuccessUrl("/?logout")
+                .permitAll();
     }
 
     @Bean
     public BCryptPasswordEncoder bCryptPasswordEncoder() {
-        return new BCryptPasswordEncoder(12);
+        return new BCryptPasswordEncoder(10);
     }
 
     @Bean

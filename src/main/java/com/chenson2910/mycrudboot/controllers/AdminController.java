@@ -1,20 +1,13 @@
 package com.chenson2910.mycrudboot.controllers;
 
-import com.chenson2910.mycrudboot.model.Role;
 import com.chenson2910.mycrudboot.model.User;
-import com.chenson2910.mycrudboot.service.RoleService;
-import com.chenson2910.mycrudboot.service.UserNotFoundException;
-import com.chenson2910.mycrudboot.service.UserService;
-import com.chenson2910.mycrudboot.service.UserServiceImpl;
+import com.chenson2910.mycrudboot.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.security.Principal;
 
 
 @Controller
@@ -23,59 +16,56 @@ public class AdminController {
 
     private final UserService userService;
     private final RoleService roleService;
-@Autowired
-    public AdminController(UserService userService, RoleService roleService) {
+    private final UserDetailServiceImpl userDetailsService;
+
+    @Autowired
+    public AdminController(UserService userService, RoleService roleService, UserDetailServiceImpl userDetailsService) {
         this.userService = userService;
         this.roleService = roleService;
+        this.userDetailsService = userDetailsService;
     }
 
 
-
-
-    @GetMapping("/users")
-    public String showUserList(Model model) {
-        List<User> userList = userService.listAll();
-        model.addAttribute("listUsers", userList);
-        return "/users";
-    }
-
-    @GetMapping("/users/new")
-    public String showNewForm(Model model) {
-        model.addAttribute("user", new User());
-        model.addAttribute("pageTitle", "Add New User");
-        return "/user_form";
-    }
-
-    @PostMapping("/users/")
-    public String saveUser(@ModelAttribute("user") User user, @RequestParam(required = false) String roleAdmin, RedirectAttributes redirectAttributes) {
-            userService.save(user);
-        redirectAttributes.addFlashAttribute("message", "User successfully created");
-        return "redirect:/admin/users";
-    }
-
-    @PutMapping("/users/{id}")
-    public String showEditForm(@PathVariable("id") Integer id,
-                               Model model, RedirectAttributes redirectAttributes) {
-        try {
-            User user = userService.get(id);
-            model.addAttribute("user", user);
-            model.addAttribute("pageTitle", "Edit User (ID " + id + ")");
-            return "/user_form";
-        } catch (UserNotFoundException e) {
-            redirectAttributes.addFlashAttribute("message", e.getMessage());
-            return "redirect:/admin/users";
+    @GetMapping({"","list"})
+    public String showAllUsers(Model model) {
+        model.addAttribute("users", userService.listAll());
+        model.addAttribute("allRoles", roleService.findAllRoles());
+        model.addAttribute("showUserProfile",
+                model.containsAttribute("user") && !((User) model.getAttribute("user")).isNew());
+        model.addAttribute("showNewUserForm",
+                model.containsAttribute("user") && ((User) model.getAttribute("user")).isNew());
+        if (!model.containsAttribute("user")) {
+            model.addAttribute("user", new User());
         }
+        return "admin-page";
     }
 
-    @DeleteMapping("/users/{id}")
-    public String deleteUser(@PathVariable("id") Integer id,
-                             RedirectAttributes redirectAttributes) {
-        try {
-            userService.delete(id);
-            redirectAttributes.addFlashAttribute("message", "User deleted");
-        } catch (UserNotFoundException e) {
-            redirectAttributes.addFlashAttribute("message", e.getMessage());
-        }
-        return "redirect:/admin/users";
+    @GetMapping("/{id}/profile")
+    public String showUserProfileModal(@PathVariable("id") Integer userId, Model model) throws UserNotFoundException {
+
+            model.addAttribute("allRoles", roleService.findAllRoles());
+            model.addAttribute("user", userService.get(userId));
+            return "fragments/user-form";
+    }
+
+
+    @PostMapping()
+    public String insertUser(@ModelAttribute("user") User user) {
+        userService.save(user);
+
+        return "redirect:/admin";
+    }
+
+    @DeleteMapping("")
+    public String deleteUser(@ModelAttribute("user") User user) throws UserNotFoundException {
+        userService.delete(user.getId());
+        return "redirect:/admin";
+    }
+
+    @PatchMapping()
+    public String updateUser(@ModelAttribute("user") User user) {
+        userService.save(user);
+
+        return "redirect:/admin";
     }
 }

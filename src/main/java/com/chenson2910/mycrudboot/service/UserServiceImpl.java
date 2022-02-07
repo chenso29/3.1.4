@@ -5,9 +5,6 @@ import com.chenson2910.mycrudboot.model.User;
 import com.chenson2910.mycrudboot.repository.RoleRepository;
 import com.chenson2910.mycrudboot.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -31,14 +28,11 @@ public class UserServiceImpl implements UserService {
     }
 
     public boolean save(User user) {
-        User userFromDB = userRepository.findByUsername(user.getUsername());
+        User userFromDB = userRepository.findByEmail(user.getEmail());
 
         if (userFromDB != null) {
             return false;
         }
-
-        user.setRoles(Collections.singleton(new Role(1, "ROLE_USER")));
-
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         userRepository.save(user);
         return true;
