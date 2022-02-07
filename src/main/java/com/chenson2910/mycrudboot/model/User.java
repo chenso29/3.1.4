@@ -18,7 +18,7 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "users")
+@Table(name = "users", indexes = {@Index(columnList = "name, last_name ASC")})
 public class User extends AbstractEntity<Integer> implements UserDetails {
 
     @Column(name = "name")

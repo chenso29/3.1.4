@@ -5,7 +5,9 @@ import com.chenson2910.mycrudboot.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.security.Principal;
 
@@ -26,7 +28,7 @@ public class AdminController {
     }
 
 
-    @GetMapping({"","list"})
+    @GetMapping({"", "list"})
     public String showAllUsers(Model model) {
         model.addAttribute("users", userService.listAll());
         model.addAttribute("allRoles", roleService.findAllRoles());
@@ -42,10 +44,9 @@ public class AdminController {
 
     @GetMapping("/{id}/profile")
     public String showUserProfileModal(@PathVariable("id") Integer userId, Model model) throws UserNotFoundException {
-
-            model.addAttribute("allRoles", roleService.findAllRoles());
-            model.addAttribute("user", userService.get(userId));
-            return "fragments/user-form";
+        model.addAttribute("allRoles", roleService.findAllRoles());
+        model.addAttribute("user", userService.get(userId));
+        return "fragments/user-form";
     }
 
 
@@ -62,10 +63,9 @@ public class AdminController {
         return "redirect:/admin";
     }
 
-    @PatchMapping()
-    public String updateUser(@ModelAttribute("user") User user) {
-        userService.save(user);
-
+    @PatchMapping
+    public String updateUser(@ModelAttribute("user") User user) throws UserNotFoundException {
+        userService.updateUser(user);
         return "redirect:/admin";
     }
 }

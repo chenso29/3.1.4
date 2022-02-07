@@ -13,5 +13,5 @@ public interface UserService {
     User get(Integer id) throws UserNotFoundException;
 
     void delete(Integer id) throws UserNotFoundException;
-
+  void updateUser(User user) throws UserNotFoundException;
 }

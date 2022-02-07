@@ -5,6 +5,7 @@ import com.chenson2910.mycrudboot.model.User;
 import com.chenson2910.mycrudboot.repository.RoleRepository;
 import com.chenson2910.mycrudboot.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -55,5 +56,13 @@ public class UserServiceImpl implements UserService {
         userRepository.deleteById(id);
     }
 
+    @Override
+    public void updateUser(User user) throws UserNotFoundException {
+        user.setPassword(user.getPassword().isEmpty() ? // todo если нет такого юзера try
+                get(user.getId()).getPassword() :
+                bCryptPasswordEncoder.encode(user.getPassword()));
+        userRepository.save(user);
 
+
+    }
 }
