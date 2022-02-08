@@ -18,13 +18,12 @@ public class AdminController {
 
     private final UserService userService;
     private final RoleService roleService;
-    private final UserDetailServiceImpl userDetailsService;
+
 
     @Autowired
-    public AdminController(UserService userService, RoleService roleService, UserDetailServiceImpl userDetailsService) {
+    public AdminController(UserService userService, RoleService roleService) {
         this.userService = userService;
         this.roleService = roleService;
-        this.userDetailsService = userDetailsService;
     }
 
 

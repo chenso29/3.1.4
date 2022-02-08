@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -18,7 +19,7 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "users", indexes = {@Index(columnList = "name, last_name ASC")})
+@Table(name = "users")
 public class User extends AbstractEntity<Integer> implements UserDetails {
 
     @Column(name = "name")
@@ -32,7 +33,6 @@ public class User extends AbstractEntity<Integer> implements UserDetails {
     @Column
     private String password;
     @ManyToMany(fetch = FetchType.LAZY)
-    @Fetch(FetchMode.JOIN)
     @JoinTable(name = "users_roles",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "roles_id"))
@@ -45,6 +45,7 @@ public class User extends AbstractEntity<Integer> implements UserDetails {
         Optional<Role> findRole = roles.stream().filter(role -> roleId == role.getId()).findFirst();
         return findRole.isPresent();
     }
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return getRoles();

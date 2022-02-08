@@ -4,5 +4,6 @@ import com.chenson2910.mycrudboot.model.Role;
 
 public interface RoleService {
     Role getRoleByName(String name);
+
     Iterable<Role> findAllRoles();
 }
