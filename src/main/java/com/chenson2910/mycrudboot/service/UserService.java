@@ -1,18 +1,16 @@
 package com.chenson2910.mycrudboot.service;
 
-import com.chenson2910.mycrudboot.model.Role;
 import com.chenson2910.mycrudboot.model.User;
-
 import java.util.List;
 
 public interface UserService {
-    List<User> listAll();
+    List<User> findAllUsers();
 
-    boolean save(User user);
+    User getOneUser(Long id);
 
-    User get(Integer id) throws UserNotFoundException;
+    User insertUser(User user);
 
-    void delete(Integer id) throws UserNotFoundException;
+    User updateUser(User user);
 
-    void updateUser(User user) throws UserNotFoundException;
+    void deleteUser(Long id);
 }

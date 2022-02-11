@@ -1,29 +1,46 @@
 package com.chenson2910.mycrudboot.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
 import org.springframework.security.core.GrantedAuthority;
 
-import javax.persistence.*;
-import java.util.Objects;
-import java.util.Set;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.ManyToMany;
+import javax.persistence.Table;
+import java.util.ArrayList;
+import java.util.List;
 
-@Data
-@NoArgsConstructor
 @Entity
 @Table(name = "roles")
-public class Role extends AbstractEntity<Integer> implements GrantedAuthority {
+public final class Role extends AbstractEntity<Integer> implements GrantedAuthority {
 
     @Column(unique = true)
     private String name;
-    @Transient
+
     @ManyToMany(mappedBy = "roles")
-    private Set<User> users;
+    private List<User> users = new ArrayList<>();
+
+    public Role() {
+    }
+
+    public Role(String name) {
+        this.name = name;
+    }
+
+    public Role(Integer id) {
+        this.setId(id);
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
 
     @Override
     public String getAuthority() {
-        return getName();
+        return name;
     }
+
 }

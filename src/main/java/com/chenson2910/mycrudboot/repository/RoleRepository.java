@@ -1,8 +1,7 @@
 package com.chenson2910.mycrudboot.repository;
 
 import com.chenson2910.mycrudboot.model.Role;
-import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.repository.CrudRepository;
 
-public interface RoleRepository extends JpaRepository<Role, Integer> {
-    Role getRoleByName(String name);
+public interface RoleRepository extends CrudRepository<Role, Integer> {
 }

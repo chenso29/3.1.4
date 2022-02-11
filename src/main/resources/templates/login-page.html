@@ -1,16 +1,15 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
-      th:with="lang=${#locale.language}" th:lang="${lang}">
+<html xmlns:th="http://www.thymeleaf.org" th:with="lang=${#locale.language}" th:lang="${lang}">
 
 <head th:replace="fragments/head-footer :: htmlhead"/>
 <body>
 
 <div class="container">
-    <form class="form-signin" th:method="POST" th:action="@{/}">
+    <form class="form-signin" th:method="POST" th:action="@{/login}">
         <h2 class="form-signin-heading">Please sign in</h2>
         <p>
-            <label for="email" class="sr-only">Username</label>
-            <input type="text" id="email" name="email" class="form-control" placeholder="Email" value="dima"
+            <label for="username" class="sr-only">Username</label>
+            <input type="text" id="username" name="username" class="form-control" placeholder="Email" value="dima"
                    autocomplete="username" required autofocus>
         </p>
         <p>
@@ -18,11 +17,10 @@
             <input type="password" id="password" name="password" class="form-control" placeholder="Password"
                    value="dima" autocomplete="current-password" required>
         </p>
-        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
         <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
     </form>
 </div>
 
-<div th:replace="fragments/head-footer :: footer"></div>
+<div th:replace="fragments/head-footer :: footer"/>
 </body>
 </html>

@@ -1,35 +1,33 @@
-<div class="container col-6 form-group text-center">
-    <form role="form" id="user-addform" th:action="@{/admin}" th:method="post" th:object="${user}">
+<div class="container col-4 form-group text-center">
+    <form role="form" id="user-addform" onsubmit="return false;">
         <div>
             <label for="newFirstName">First name</label>
-            <input type="text" class="form-control" placeholder="Enter first name" th:field="*{firstName}" id="newFirstName">
+            <input type="text" class="form-control" placeholder="Enter first name" name="firstName" id="newfirstName">
         </div>
         <div>
             <label for="newLastName">Last name</label>
-            <input type="text" class="form-control" placeholder="Enter last name" th:field="*{lastName}" id="newLastName">
+            <input type="text" class="form-control" placeholder="Enter last name" name="lastName" id="newlastName">
         </div>
         <div>
             <label for="newAge">Age</label>
-            <input type="number" class="form-control" placeholder="Enter age" th:field="*{age}" id="newAge">
+            <input type="number" class="form-control" name="age" id="newage">
         </div>
         <div>
             <label for="newEmail">E-mail</label>
-            <input type="text" class="form-control" placeholder="Enter email" th:field="*{email}" id="newEmail">
+            <input type="text" class="form-control" placeholder="Enter e-mail" name="email" id="newemail"
+                   autocomplete="username">
         </div>
-    <div id="password-div">
-        <label for="newPassword">Password</label>
-        <input type="text" class="form-control" placeholder="Enter password" th:field="*{password}" id="newPassword">
-    </div>
-    <div>
-        <label for="newRoles">Role</label>
-        <select multiple class="form-control" id="newRoles" name="roles">
-            <option th:each="role : ${allRoles}"
-                    th:selected="*{hasRole('__${role.id}__')}" th:text="${role.name}"
-                    th:value="${role.id}">
-        </select>
-    </div>
-    <div>
-        <button type="submit" class="btn btn-success mt-3">Add new User</button>
-    </div>
+        <div id="password-div">
+            <label for="newPassword">Password</label>
+            <input type="password" class="form-control" placeholder="Enter password" name="password" id="newpassword"
+                   autocomplete="current-password">
+        </div>
+        <div>
+            <label for="newRoles">Role</label>
+            <select multiple class="form-control" id="newroles" name="roles[]"></select>
+        </div>
+        <div>
+            <button type="submit" class="btn btn-success mt-3">Add new User</button>
+        </div>
     </form>
 </div>
